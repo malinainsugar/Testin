@@ -1,3 +1,4 @@
 /.idea
 /venv
-/path/to/vacancies.csv
+*.csv
+/__pycache__
