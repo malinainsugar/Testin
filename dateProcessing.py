@@ -3,17 +3,27 @@ from Report import Statistics, Report
 import csv
 import os
 import sys
+import re
 
 
 class InputConnect:
+    """Класс, отвечающий за выбор вывода информации о вакансиях
+
+    Attributes:
+        file (DataSet): Объект класса DataSet - инициализирует файл
+        table (Table): Объект класса Table - инициализирует таблицу
+        statistics (Statistics): Объект класса Statistics - используется для анализа вакансий
+        report (Report): Объект класса Report - формирует итоговый отчёт
+    """
     def __init__(self):
+        """Инициализирует объект InputConnect"""
         outputSelection = input("Вакансии или Статистика: ")
         self.file = DataSet()
+
         if outputSelection == "Вакансии":
             self.table = Table()
-            isFilter, needPrint = self.table.checkingParameterValues()
-            if needPrint:
-                needPrint, parameterFilter = self.table.checkingEnteredValues()
+            if self.table.checkingParameterValues():
+                needPrint = self.table.checkingEnteredValues()
             if needPrint:
                 vacancies = self.file.parserCSVforTable()
                 if len(vacancies) > 0:
@@ -34,16 +44,28 @@ class InputConnect:
             report.generate_pdf(vacancies)
 
 class DataSet:
+    """Класс для представления файла
+    
+    Attributes:
+        file_name (str): Имя входящего файла
+        heading (list): Список заголовков
+        information (list): Список строк с вакансиями
+        vacancies (list): Итоговый список вакансий
+    """
     def __init__(self):
+        """Инициализирует объект DataSet"""
         self.file_name = input("Введите название файла: ")
 
     def parserCSVforReport(self, parameters):
+        """Считывает входной файл, форматирует каждую вакансию и отправляет её на статистический анализ
+
+        Args:
+            parameters(Statistics): Объект классa Statistics, используется для анализа вакансий
+        """
         with open(self.file_name, encoding='utf-8') as file:
             reader = csv.reader(file)
             self.heading = next(reader)
             self.heading[0] = "name"
-            self.vacancies = []
-            self.vibr = []
             for line in reader:
                 fits = True
                 if len(line) < len(self.heading):
@@ -54,11 +76,15 @@ class DataSet:
                         break
                 if fits:
                     vacancy = {self.heading[i]: line[i] for i in range(len(self.heading)) if
-                               self.heading[i] in ['name', 'salary_from', 'salary_to', 'salary_currency', 'area_name',
-                                                   'published_at']}
-                    Statistics.filtering(parameters, vacancy)
+                               self.heading[i] in ['name', 'salary_from', 'salary_to', 'salary_currency', 'area_name', 'published_at']}
+                    parameters.filtering(vacancy)
 
     def parserCSVforTable(self):
+        """Считывает входной файл, форматирует каждую вакансию, формируя общий список вакансий
+
+        Returns:
+            vacancies (list): Итоговый список вакансий
+        """
         with open(self.file_name, encoding='utf-8') as file:
             if os.stat(self.file_name).st_size == 0:
                 print("Пустой файл")
@@ -94,7 +120,14 @@ class DataSet:
                 self.vacancies.append(Vacancy(vacancy))
         return self.vacancies
 
-    dictTranslationHeading = {"name": "Название",
+    def translateHeading(self):
+        """Переводит заголовки на русский язык при помощи словаря - dictTranslationHeading"""
+        for i in range(len(self.heading)):
+            for english, russian in dictTranslationHeading.items():
+                if self.heading[i] == english:
+                    self.heading[i] = russian
+
+dictTranslationHeading = {"name": "Название",
                               "description": "Описание",
                               "key_skills": "Навыки",
                               "experience_id": "Опыт работы",
@@ -106,10 +139,3 @@ class DataSet:
                               "salary_currency": "Идентификатор валюты оклада",
                               "area_name": "Название региона",
                               "published_at": "Дата публикации вакансии"}
-
-    # Переводчик заголовков
-    def translateHeading(self):
-        for i in range(len(self.heading)):
-            for english, russian in DataSet.dictTranslationHeading.items():
-                if self.heading[i] == english:
-                    self.heading[i] = russian

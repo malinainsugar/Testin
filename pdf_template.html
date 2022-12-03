@@ -51,21 +51,21 @@
     <h2>Статистика по годам</h2>
     <table>
         <tr><th>Год</th><th>Средняя зарплата</th><th>Средняя зарплата - {{ nameProfessonal }}</th><th>Количество вакансий</th><th>Количество вакансий - {{ nameProfessonal }}</th></tr>
-        {% for year in dataList[0] %}
-            <tr><td>{{ year }}</td><td>{{ dataList[1][year] }}</td><td>{{ dataList[2][year] }}</td><td>{{ dataList[3][year] }}</td><td>{{ dataList[4][year] }}</td></tr>
+        {% for year in dataList['years'] %}
+            <tr><td>{{ year }}</td><td>{{ dataList['salaryYear'][year] }}</td><td>{{ dataList['selectedSalaryYear'][year] }}</td><td>{{ dataList['numberVacancies'][year] }}</td><td>{{ dataList['selectedNumberVacancies'][year] }}</td></tr>
         {% endfor %}
     </table>
     <h2>Статистика по городам</h2>
     <div>
         <table>
             <tr><th>Город</th><th>Уровень зарплат</th></tr>
-            {% for key, value in dataList[5].items() %}
+            {% for key, value in dataList['salaryCity'].items() %}
                 <tr><td>{{ key }}</td><td>{{ value }}</td></tr>
             {% endfor %}
         </table>
         <table>
             <tr><th>Город</th><th>Доля вакансий</th></tr>
-            {% for key, value in dataList[6].items() %}
+            {% for key, value in dataList['vacanciesCity'].items() %}
                 <tr><td>{{ key }}</td><td>{{ (value * 100)|round(2) }}%</td></tr>
             {% endfor %}
         </table>

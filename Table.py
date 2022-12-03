@@ -4,40 +4,88 @@ import datetime
 
 
 class Salary:
+    """Класс для представления зарплаты.
+
+    Attributes:
+        salary_from (str): Нижняя граница вилки оклада
+        salary_to (str): Верхняя граница вилки оклада
+        salary_gross (str): Оклад указан до вычета налогов
+        salary_currency (str): Валюта оклада
+    """
     def __init__(self, vacancy: dict):
+        """Инициализирует объект Salary, выполняет форматирование для целочисленных полей
+
+        Args:
+            vacancy (dict): Вакансия
+        """
         self.salary_from = '{0:,}'.format(int(float(vacancy["Нижняя граница вилки оклада"]))).replace(',', ' ')
         self.salary_to = '{0:,}'.format(int(float(vacancy["Верхняя граница вилки оклада"]))).replace(',', ' ')
         self.salary_gross = dictTranslationTaxes[vacancy["Оклад указан до вычета налогов"]]
         self.salary_currency = dictTranslationСurrency[vacancy["Идентификатор валюты оклада"]]
 
-    def convertsToRub(lowerBound: int, upperBound: int, currency: str):
-        return currency_to_rub[currency] * (int(upperBound.replace(' ', '')) + int(lowerBound.replace(' ', ''))) / 2
+    def convertsToRub(self):
+        """Вычисляет среднюю зарплату и конвертирует её в рубли при помощи словаря - currency_to_rub
+
+        Returns:
+            float: средняя зарплата в рублях
+        """
+        return currency_to_rub[self.salary_currency] * (int(self.salary_from.replace(' ', '')) + int(self.salary_to.replace(' ', ''))) / 2
 
 class Vacancy:
+    """Класс для представления вакансии.
+
+    Attributes:
+        name (str): Название вакансии
+        description (str): Описание вакансии
+        key_skills (list): Список навыков
+        experience_id (str): Опыт работы
+        premium (bool or str): Премиум-вакансия
+        employer_name (str): Название компании
+        salary (Salary): Вся информация о зарплате
+        area_name (str): Название региона
+        published_at (datetime): Дата публикации вакансии
+        str_skills (str): Строка навыков
+    """
     def __init__(self, vacancy: dict):
+        """Инициализирует объект Vacancy, выполняет форматирование различных полей с помощью функций и словарей: dictTranslationExperience и dictTranslationBool 
+
+        Args:
+            vacancy (dict): Вакансия
+        """
         self.name = vacancy['Название']
-        self.description = Vacancy.croppingСharacters(vacancy["Описание"], 100)
-        self.key_skills = re.split("\n", Vacancy.formatterSkills(vacancy["Навыки"]))
+        self.description = self.croppingСharacters(vacancy["Описание"], 100)
+        self.key_skills = re.split("\n", vacancy["Навыки"].replace('&&&&', '\n'))
         self.experience_id = dictTranslationExperience[vacancy["Опыт работы"]]
         self.premium = dictTranslationBool[vacancy["Премиум-вакансия"]]
         self.employer_name = vacancy['Компания']
         self.salary = Salary(vacancy)
         self.area_name = vacancy['Название региона']
-        self.published_at = Vacancy.formatterData(vacancy["Дата публикации вакансии"])
-        self.str_skills = Vacancy.croppingСharacters(Vacancy.formatterSkills(vacancy["Навыки"]), 100)
+        self.published_at = datetime.datetime.strptime(vacancy["Дата публикации вакансии"], "%Y-%m-%dT%H:%M:%S%z")
+        self.str_skills = self.croppingСharacters(vacancy["Навыки"].replace('&&&&', '\n'), 100)
 
-    def croppingСharacters(message: str, maxLen):
+    def croppingСharacters(self, message: str, maxLen : int):
+        """Отвечает за то, чтобы строка была не более заданной длины.
+
+        Args:
+            message (str): Строка, которую необходимо проверить (при необходимости - обрезать)
+            maxLen (int): Максимальная длина строки
+
+        Returns:
+            message (str): Обработанная строка
+        """
         if len(message) >= maxLen:
             return message[:maxLen] + "..."
         return message
 
-    def formatterSkills(skills: str):
-        return skills.replace('&&&&', '\n')
+    def returnsValues(self, parameter):
+        """Возвращает значение атрибута вакансии для сортировки и фильтрации
+        
+        Args:
+            parameter (str): Искомый параметр
 
-    def formatterData(data: str):
-        return datetime.datetime.strptime(data, "%Y-%m-%dT%H:%M:%S%z")
-
-    def returnsValues(self, parameterSort):
+        Returns:
+            parameter (str): Искомое значение
+        """
         heading = {"Название": self.name,
                    "Описание": self.description,
                    "Опыт работы": self.experience_id,
@@ -48,11 +96,24 @@ class Vacancy:
                    "Оклад указан до вычета налогов": self.salary.salary_gross,
                    "Идентификатор валюты оклада": self.salary.salary_currency,
                    "Название региона": self.area_name,
-                   "Дата публикации вакансии": self.published_at, }
-        return heading.get(parameterSort)
+                   "Дата публикации вакансии": self.published_at}
+        return heading.get(parameter)
 
 class Table:
+    """Класс для представления таблицы
+
+    Attributes:
+        parameterFilter (str): Параметр фильтрации
+        parameterSort (str): Параметр сортировки
+        isReverseSort (str or bool): Обратный порядок сортировки (Да / Нет)
+        borders (list): Диапазон вывода (строки)
+        requiredColumns (list): Требуемые столбцы для вывода
+        isFilter (bool): Нужна ли фильтрация
+        needPrint (bool): Нужно ли печатать
+        vacanciesTable (PrettyTable): Таблица
+    """
     def __init__(self):
+        """Инициализирует объект Table"""
         self.parameterFilter = str(input("Введите параметр фильтрации: "))
         self.parameterSort = input("Введите параметр сортировки: ")
         self.isReverseSort = input("Обратный порядок сортировки (Да / Нет): ")
@@ -60,6 +121,11 @@ class Table:
         self.requiredColumns = list(input("Введите требуемые столбцы: ").split(", "))
 
     def checkingParameterValues(self):
+        """Проверяет корректность ввода параметра фильтрации
+
+        Returns:
+            needPrint (bool): Нужно ли печатать
+        """
         self.isFilter = True
         self.needPrint = True
         if self.parameterFilter == '':
@@ -67,10 +133,14 @@ class Table:
         elif ":" not in self.parameterFilter:
             print("Формат ввода некорректен")
             self.needPrint = False
-        return self.isFilter, self.needPrint
+        return self.needPrint
 
-    # Проверка валидности вводимых данных
     def checkingEnteredValues(self):
+        """Проверяет валидность вводимых данных
+        
+        Returns:
+            needPrint (bool): Нужно ли печатать
+        """
         heading = ["№", "Название", "Нижняя граница вилки оклада", "Верхняя граница вилки оклада",
                    "Оклад указан до вычета налогов", "Описание", "Навыки", "Опыт работы", "Премиум-вакансия",
                    "Компания", "Оклад", "Название региона", "Дата публикации вакансии", "",
@@ -86,20 +156,28 @@ class Table:
         elif self.isReverseSort not in ["Да", "Нет", ""]:
             print("Порядок сортировки задан некорректно")
             self.needPrint = False
-        return self.needPrint, self.parameterFilter
+        return self.needPrint
 
-    # Обработка поля ввода обратной сортировки
     def processingSortOrder(self):
+        """Обрабатывает поле ввода обратной сортировки
+        
+        Returns:
+            isReverseSort (bool or str): Обратный порядок сортировки (Да / Нет)
+        """
         if self.isReverseSort == "":
             return False
         else:
             return dictTranslationBool[self.isReverseSort]
 
-    def sortedSkills(self, obje):
-        return len(obje.key_skills)
-
-    # Сортировка ваканский
     def sortingVacancies(self, vacancies_list: list):
+        """Сортирует список вакансий
+        
+        Args:
+            vacancies_list (list): Список ваканский, который необходимо отсортировать
+
+        Returns:
+            vacancies_list (list): Отсортированный список
+        """
         if self.parameterSort == "Навыки":
             return vacancies_list.sort(key=lambda vacancy: len(vacancy.key_skills), reverse=self.isReverseSort)
         if self.parameterSort == "Опыт работы":
@@ -107,28 +185,43 @@ class Table:
                                        reverse=self.isReverseSort)
         if self.parameterSort == "Оклад":
             return vacancies_list.sort(
-                key=lambda vacancy: Salary.convertsToRub(vacancy.salary.salary_from, vacancy.salary.salary_to,
-                                                         vacancy.salary.salary_currency), reverse=self.isReverseSort)
+                key=lambda vacancy: vacancy.convertsToRub(), reverse=self.isReverseSort)
         return vacancies_list.sort(key=lambda vacancy: vacancy.returnsValues(self.parameterSort),
                                    reverse=self.isReverseSort)
 
-    # Форматирование границ таблицы
     def formattingBorders(self, s: list, vacancies: list):
+        """Форматирует границы таблицы по длине
+        
+        Args:
+            s (list): Границы таблицы
+            vacancies (list): Список вакансий
+
+        Returns:
+            int, int: Границы таблицы
+        """
         if len(s) == 0:
             return 0, len(vacancies)
         if len(s) == 1:
             return s[0] - 1, len(vacancies)
         return s[0] - 1, s[1] - 1
 
-    # Форматирование колонок таблицы
     def formattingFields(self):
+        """Определяет, заданны ли колонки таблицы
+
+        Returns:
+            list: Выводимые колонки
+        """
         if self.requiredColumns == ['']:
             return self.vacanciesTable.field_names
         self.requiredColumns.insert(0, "№")
         return self.requiredColumns
 
-    # Печать таблицы
     def print_vacancies(self, data_vacancies: list):
+        """Печатает таблицу
+
+        Args:
+            data_vacancies (list): Список вакансий
+        """
         self.vacanciesTable = prettytable.PrettyTable()
         maxWidth = 20
         self.vacanciesTable.field_names = ["№", "Название", "Описание", "Навыки", "Опыт работы", "Премиум-вакансия",
