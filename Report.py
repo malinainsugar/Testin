@@ -162,7 +162,7 @@ class Report:
         plt.pie(vacanciesCity, labels=labels, textprops={"fontsize": 6})
 
         plt.tight_layout()
-        plt.savefig('graph.png', dpi=250)
+        plt.savefig('graph.png', dpi=300)
 
     def generate_pdf(self, dataList: list):
         env = Environment(loader=FileSystemLoader('.'))
