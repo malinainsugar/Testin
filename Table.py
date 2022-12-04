@@ -64,6 +64,45 @@ class Vacancy:
         self.published_at = datetime.datetime.strptime(vacancy["Дата публикации вакансии"], "%Y-%m-%dT%H:%M:%S%z")
         self.str_skills = Vacancy.croppingСharacters(vacancy["Навыки"].replace('&&&&', '\n'), 100)
 
+
+    # def formatterDataDatetime(data: str):
+    #     """Преобразует дату и время с помощью библиотеки datetime. Самый быстрый вариант, занял 0.007 sec
+    #
+    #     Args:
+    #         data (str): строка с датой в формате Y-m-dTH:M:S+z
+    #
+    #     Returns:
+    #         datetime: дата в формате %Y-%m-%dT%H:%M:%S%z
+    #     """
+    #     return datetime.datetime.strptime(data, "%Y-%m-%dT%H:%M:%S%z")
+
+    # def formatterDataStr(data: str):
+    #     """Преобразует дату в строку. Не самый быстрый вариант, занял 0.019 sec
+    #
+    #     Args:
+    #         data (str): строка с датой в формате Y-m-dTH:M:S+z
+    #
+    #     Returns:
+    #         str: дата в формате {d}.{m}.{y}
+    #     """
+    #     d = data[:4]
+    #     m = data[5:7]
+    #     y = data[8:10]
+    #     return f'{d}.{m}.{y}'
+
+    # def formatterDataRe(data : str):
+    #     """Преобразует дату в строку. Не самый быстрый вариант, занял 0.018 sec
+    #
+    #     Args:
+    #         data (str): строка с датой в формате Y-m-dTH:M:S+z
+    #
+    #     Returns:
+    #         str: дата в формате {d}.{m}.{y}
+    #     """
+    #     yyyy, mm, dd, h, m, ss, *_ = re.split(r'[T:.-]', data)
+    #     return f'{dd}/{mm}/{yyyy}'
+
+
     def croppingСharacters(message: str, maxLen : int):
         """Отвечает за то, чтобы строка была не более заданной длины.
 
