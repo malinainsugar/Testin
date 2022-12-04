@@ -99,11 +99,11 @@ class Report:
         """
         self.nameProfession = nameProfession
 
-    def generate_excel(self, dataList: list):
+    def generate_excel(self, dataList: dict):
         """Генерирует Excel-файл (таблицу) со статистикой
 
         Args:
-            dataList (list): Список с данными о собранной статистике
+            dataList (dict): Данные о собранной статистике
         """
         vacanciesBook = Workbook()
         statisticsYear = vacanciesBook.active
@@ -178,11 +178,11 @@ class Report:
         for col, value in colsDict.items():
             sheet.column_dimensions[col].width = value + 2
 
-    def generate_image(self, dataList: list):
+    def generate_image(self, dataList: dict):
         """Генерирует изображение со статистическими графиками
 
         Args:
-            dataList (list): Список с данными о собранной статистике
+            dataList (dict): Данные о собранной статистике
         """
         x = np.arange(min(dataList['years']), max(dataList['years']) + 1) - 0.25
 
@@ -223,11 +223,11 @@ class Report:
         plt.tight_layout()
         plt.savefig('graph.png', dpi=300)
 
-    def generate_pdf(self, dataList: list):
-        """Генерирует pfd-отчёт
+    def generate_pdf(self, dataList: dict):
+        """Генерирует pdf-отчёт
 
         Args:
-            dataList (list): Список с данными о собранной статистике
+            dataList (dict): Данные о собранной статистике
         """
         env = Environment(loader=FileSystemLoader('.'))
         template = env.get_template("pdf_template.html")
