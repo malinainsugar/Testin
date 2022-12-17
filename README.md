@@ -33,3 +33,7 @@
 Функция formatterDataRe (переименована)
 
 ![](Screenshots/reProfile.PNG)
+
+## Разделённые csv-файлы:
+
+![](Screenshots/separateFiles.PNG)
