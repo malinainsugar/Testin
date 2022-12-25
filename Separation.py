@@ -40,5 +40,5 @@ class Separation:
                             writer.writerow(line)
                             print(year)
 
-d = Separation()
-d.separateCsv()
+separation = Separation()
+separation.separateCsv()

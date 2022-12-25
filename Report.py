@@ -12,24 +12,24 @@ class Statistics:
 
     Attributes:
         nameProfession (str): Название профессии, которую нужно проанализировать
-        salaryLevel (dict): Динамика уровня зарплат по годам
+        salaryYear (dict): Динамика уровня зарплат по годам
         numberVacancies (dict): Динамика количества вакансий по годам
-        selectedSalaryLevel (dict): Динамика уровня зарплат по годам для выбранной профессии
+        selectedSalaryYear (dict): Динамика уровня зарплат по годам для выбранной профессии
         selectedNumberVacancies (dict): Динамика количества вакансий по годам для выбранной профессии
-        salariesСity (dict): Уровень зарплат по городам
-        vacanciesСity (dict): Доля вакансий по городам
+        salaryCity (dict): Уровень зарплат по городам
+        vacanciesCity (dict): Доля вакансий по городам
         counts (int): Счётчик вакансий
         years (list): Список представленных лет
     """
     def __init__(self):
         """Инициализирует объект Statistics"""
         self.nameProfession = str(input("Введите название профессии: "))
-        self.salaryLevel = {}
+        self.salaryYear = {}
         self.numberVacancies = {}
-        self.selectedSalaryLevel = {}
+        self.selectedSalaryYear = {}
         self.selectedNumberVacancies = {}
-        self.salariesСity = {}
-        self.vacanciesСity = {}
+        self.salaryCity = {}
+        self.vacanciesCity = {}
         self.counts = 0
         self.years = []
 
@@ -46,15 +46,15 @@ class Statistics:
             self.years.append(year)
         salary = int(mean((float(vacancy['salary_from']), float(vacancy['salary_to']))) * currency_to_rub[vacancy['salary_currency']])
         self.numberVacancies.update({year: self.numberVacancies.get(year, 0) + 1})
-        self.salaryLevel.update({year: self.salaryLevel.get(year, []) + [salary]})
+        self.salaryYear.update({year: self.salaryYear.get(year, []) + [salary]})
         if self.nameProfession in vacancy['name']:
             self.selectedNumberVacancies.update({year: self.selectedNumberVacancies.get(year, 0) + 1})
-            self.selectedSalaryLevel.update({year: self.selectedSalaryLevel.get(year, []) + [salary]})
-        self.vacanciesСity.update({vacancy['area_name']: self.vacanciesСity.get(vacancy['area_name'], 0) + 1})
-        self.salariesСity.update({vacancy['area_name']: self.salariesСity.get(vacancy['area_name'], []) + [salary]})
+            self.selectedSalaryYear.update({year: self.selectedSalaryYear.get(year, []) + [salary]})
+        self.vacanciesCity.update({vacancy['area_name']: self.vacanciesCity.get(vacancy['area_name'], 0) + 1})
+        self.salaryCity.update({vacancy['area_name']: self.salaryCity.get(vacancy['area_name'], []) + [salary]})
         if len(self.selectedNumberVacancies) == 0:
             self.selectedNumberVacancies.update({year: 0})
-            self.selectedSalaryLevel.update({year: []})
+            self.selectedSalaryYear.update({year: []})
 
     def print_vacancies(self):
         """Производит вывод полученных данных в консоль
@@ -62,16 +62,12 @@ class Statistics:
         Returns:
             dict: Список полученных данных 
         """
-        salaryYear = {key: int(mean(value)) for key, value in self.salaryLevel.items()}
-        numberVacancies = self.numberVacancies
-        selectedSalaryYear = {key: (int(mean(value)) if len(value) > 0 else 0) for key, value in
-                              self.selectedSalaryLevel.items()}
-        selectedNumberVacancies = self.selectedNumberVacancies
-        salaryCity = dict(sorted({key: int(mean(value)) for key, value in self.salariesСity.items()}.items(),
-                                 key=lambda item: item[1], reverse=True)[0:10])
-        vacanciesCity = dict(
-            sorted({key: round(value / self.counts, 4) for key, value in self.vacanciesСity.items()}.items(),
-                   key=lambda item: item[1], reverse=True)[0:10])
+        salaryYear = dict(sorted({key: int(mean(value)) for key, value in self.salaryYear.items()}.items(), key = lambda item: item[0]))
+        numberVacancies = dict(sorted(self.numberVacancies.items(), key = lambda item: item[0]))
+        selectedSalaryYear = dict(sorted({key: (int(mean(value)) if len(value) > 0 else 0) for key, value in self.selectedSalaryYear.items()}.items(), key = lambda item: item[0]))
+        selectedNumberVacancies = dict(sorted(self.selectedNumberVacancies.items(), key = lambda item: item[0]))
+        salaryCity = dict(sorted({key: int(mean(value)) for key, value in self.salaryCity.items()}.items(), key=lambda item: item[1], reverse=True)[0:10])
+        vacanciesCity = dict(sorted({key: round(value / self.counts, 4) for key, value in self.vacanciesCity.items()}.items(), key=lambda item: item[1], reverse=True)[0:10])
 
         print('Динамика уровня зарплат по годам:', salaryYear)
         print('Динамика количества вакансий по годам:', numberVacancies)
@@ -82,8 +78,7 @@ class Statistics:
 
         return {'salaryYear': salaryYear, 'numberVacancies': numberVacancies,
         'selectedSalaryYear': selectedSalaryYear, 'selectedNumberVacancies': selectedNumberVacancies,
-        'salaryCity': salaryCity, 'vacanciesCity': vacanciesCity,
-        'years': self.years}
+        'salaryCity': salaryCity, 'vacanciesCity': vacanciesCity, 'years': self.years}
 
 class Report:
     """Класс, генерирующий отчёт
