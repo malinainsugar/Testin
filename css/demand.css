@@ -1,6 +1,6 @@
 main {
     display: flex; 
-    gap: 80px;
+    gap: 50px;
     padding: 0 200px;
 }
 
@@ -11,5 +11,11 @@ img {
 .graphics {
     display: flex;
     flex-direction: column;
-    gap: 50px;
+    gap: 20px;
+}
+
+th {
+    position: sticky;
+    top: 0;
+    background-color: #01E176;
 }

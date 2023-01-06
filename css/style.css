@@ -68,6 +68,7 @@ main {
     padding: 14px 23px;
 
     display: flex;
+    margin-bottom: 0;
 }
 
 .main-footer .author {

@@ -8,8 +8,10 @@ table {
 }
 
 td, th {
-    border: 2px solid #FFFFFF;
+    border: 2px solid white;
     padding: 10px;
 }
 
-
+tr:hover {
+    background-color: #68F2B0;
+}
