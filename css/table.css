@@ -1,0 +1,15 @@
+table {
+    color: black;
+    background-color: #01E176;
+    border-collapse: collapse;
+    text-align: center;
+    font-size: 16px;
+    line-height: 19px;
+}
+
+td, th {
+    border: 2px solid #FFFFFF;
+    padding: 10px;
+}
+
+

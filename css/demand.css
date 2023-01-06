@@ -1,0 +1,15 @@
+main {
+    display: flex; 
+    gap: 80px;
+    padding: 0 200px;
+}
+
+img {
+    display: block;
+}
+
+.graphics {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
