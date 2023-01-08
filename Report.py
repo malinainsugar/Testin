@@ -5,13 +5,15 @@ from openpyxl import Workbook
 from openpyxl.styles import Border, Font, Side, Alignment
 from jinja2 import Environment, FileSystemLoader
 import pdfkit
-
+from collections import Counter
+import sqlite3
+import json
 
 class Statistics:
     """Класс, представляющий методы для статистического анализа данных
 
     Attributes:
-        nameProfession (str): Название профессии, которую нужно проанализировать
+        nameProfession (list): Название профессии, которую нужно проанализировать
         salaryYear (dict): Динамика уровня зарплат по годам
         numberVacancies (dict): Динамика количества вакансий по годам
         selectedSalaryYear (dict): Динамика уровня зарплат по годам для выбранной профессии
@@ -20,10 +22,12 @@ class Statistics:
         vacanciesCity (dict): Доля вакансий по городам
         counts (int): Счётчик вакансий
         years (list): Список представленных лет
+        skills (dict): Словарь топ-10 навыков по годам
     """
     def __init__(self):
         """Инициализирует объект Statistics"""
-        self.nameProfession = str(input("Введите название профессии: "))
+        #self.nameProfession = str(input("Введите название профессии: "))
+        self.nameProfession = ['QA-инженер', 'тестировщик', 'qa', 'test', 'тест', 'quality assurance']
         self.salaryYear = {}
         self.numberVacancies = {}
         self.selectedSalaryYear = {}
@@ -32,6 +36,7 @@ class Statistics:
         self.vacanciesCity = {}
         self.counts = 0
         self.years = []
+        self.skills = {}
 
     def filtering(self, vacancy: dict):
         """Анализирует данные вакансии, обновляет счетчики в словарях. 
@@ -40,45 +45,75 @@ class Statistics:
         Args:
             vacancy (dict): Анализируемая вакансия
         """
-        year = int(vacancy['published_at'][0:4])
+        year = int(vacancy['published_at'][6:])
         self.counts += 1
         if year not in self.years:
             self.years.append(year)
-        salary = int(mean((float(vacancy['salary_from']), float(vacancy['salary_to']))) * currency_to_rub[vacancy['salary_currency']])
+        salary = int(vacancy['salary'])
         self.numberVacancies.update({year: self.numberVacancies.get(year, 0) + 1})
         self.salaryYear.update({year: self.salaryYear.get(year, []) + [salary]})
-        if self.nameProfession in vacancy['name']:
-            self.selectedNumberVacancies.update({year: self.selectedNumberVacancies.get(year, 0) + 1})
-            self.selectedSalaryYear.update({year: self.selectedSalaryYear.get(year, []) + [salary]})
-        self.vacanciesCity.update({vacancy['area_name']: self.vacanciesCity.get(vacancy['area_name'], 0) + 1})
-        self.salaryCity.update({vacancy['area_name']: self.salaryCity.get(vacancy['area_name'], []) + [salary]})
+        for i in self.nameProfession:
+            if i.lower() in vacancy['name'].lower():
+                self.selectedNumberVacancies.update({year: self.selectedNumberVacancies.get(year, 0) + 1})
+                self.selectedSalaryYear.update({year: self.selectedSalaryYear.get(year, []) + [salary]})
+                break
+        if len(vacancy['key_skills']) != 0:
+            self.skills.update({year : self.skills.get(year, []) + vacancy['key_skills'].split('&&&&')})
+        #self.vacanciesCity.update({vacancy['area_name']: self.vacanciesCity.get(vacancy['area_name'], 0) + 1})
+        #self.salaryCity.update({vacancy['area_name']: self.salaryCity.get(vacancy['area_name'], []) + [salary]})
         if len(self.selectedNumberVacancies) == 0:
             self.selectedNumberVacancies.update({year: 0})
             self.selectedSalaryYear.update({year: []})
 
     def print_vacancies(self):
-        """Производит вывод полученных данных в консоль
+        """Производит вывод полученных данных в консоль и выгрузку в базу данных statistics
         
         Returns:
             dict: Список полученных данных 
         """
+
+        self.years.sort()
         salaryYear = dict(sorted({key: int(mean(value)) for key, value in self.salaryYear.items()}.items(), key = lambda item: item[0]))
         numberVacancies = dict(sorted(self.numberVacancies.items(), key = lambda item: item[0]))
         selectedSalaryYear = dict(sorted({key: (int(mean(value)) if len(value) > 0 else 0) for key, value in self.selectedSalaryYear.items()}.items(), key = lambda item: item[0]))
         selectedNumberVacancies = dict(sorted(self.selectedNumberVacancies.items(), key = lambda item: item[0]))
-        salaryCity = dict(sorted({key: int(mean(value)) for key, value in self.salaryCity.items()}.items(), key=lambda item: item[1], reverse=True)[0:10])
-        vacanciesCity = dict(sorted({key: round(value / self.counts, 4) for key, value in self.vacanciesCity.items()}.items(), key=lambda item: item[1], reverse=True)[0:10])
+        for year, skills in self.skills.items():
+            skills = Counter(skills)
+            skills = dict(sorted(skills.items(), key = lambda item: item[1], reverse=True)[:10])
+            self.skills.update({year : skills})
+        self.skills = dict(sorted(self.skills.items(), key = lambda item: item[0]))
+        #salaryCity = dict(sorted({key: int(mean(value)) for key, value in self.salaryCity.items()}.items(), key=lambda item: item[1], reverse=True)[0:10])
+        #vacanciesCity = dict(sorted({key: round(value / self.counts, 4) for key, value in self.vacanciesCity.items()}.items(), key=lambda item: item[1], reverse=True)[0:10])
 
         print('Динамика уровня зарплат по годам:', salaryYear)
         print('Динамика количества вакансий по годам:', numberVacancies)
         print('Динамика уровня зарплат по годам для выбранной профессии:', selectedSalaryYear)
         print('Динамика количества вакансий по годам для выбранной профессии:', selectedNumberVacancies)
-        print('Уровень зарплат по городам (в порядке убывания):', salaryCity)
-        print('Доля вакансий по городам (в порядке убывания):', vacanciesCity)
+        #print('Уровень зарплат по городам (в порядке убывания):', salaryCity)
+        #print('Доля вакансий по городам (в порядке убывания):', vacanciesCity)
+        print(self.skills)
 
-        return {'salaryYear': salaryYear, 'numberVacancies': numberVacancies,
-        'selectedSalaryYear': selectedSalaryYear, 'selectedNumberVacancies': selectedNumberVacancies,
-        'salaryCity': salaryCity, 'vacanciesCity': vacanciesCity, 'years': self.years}
+        conn = sqlite3.connect('statistics.db')
+        cur = conn.cursor()
+
+        cur.execute("""CREATE TABLE IF NOT EXISTS years(
+        year INT PRIMARY KEY,
+        salaryYear INTEGER,
+        numberVacancies INTEGER,
+        selectedSalaryYear INTEGER,
+        selectedNumberVacancies INTEGER,
+        skills TEXT);
+        """)
+
+        for year in self.years:
+            cur.execute("INSERT INTO years VALUES(?, ?, ?, ?, ?, ?);", (year, salaryYear[year], numberVacancies[year], selectedSalaryYear[year], selectedNumberVacancies[year], json.dumps(self.skills.get(year))))
+            conn.commit()
+
+        return {'years': self.years, 'salaryYear': salaryYear, 'numberVacancies': numberVacancies,
+        'selectedSalaryYear': selectedSalaryYear, 'selectedNumberVacancies': selectedNumberVacancies, 'skills': self.skills}
+
+        
+
 
 class Report:
     """Класс, генерирующий отчёт

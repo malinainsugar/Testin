@@ -18,7 +18,8 @@ class InputConnect:
     """
     def __init__(self):
         """Инициализирует объект InputConnect"""
-        outputSelection = input("Вакансии или Статистика: ")
+        #outputSelection = input("Вакансии или Статистика: ")
+        outputSelection = 'Статистика'
         self.file = DataSet()
 
         if outputSelection == "Вакансии":
@@ -40,10 +41,10 @@ class InputConnect:
             asynchrony = MultiprocessingByYear(self.statistics)
             asynchrony.asynchronousProcessing()
             vacancies = self.statistics.print_vacancies()
-            report = Report(self.statistics.nameProfession)
-            report.generate_excel(vacancies)
-            report.generate_image(vacancies)
-            report.generate_pdf(vacancies)
+            #report = Report(self.statistics.nameProfession)
+            #report.generate_excel(vacancies)
+            #report.generate_image(vacancies)
+            #report.generate_pdf(vacancies)
 
 class DataSet:
     """Класс для представления файла
