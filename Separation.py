@@ -12,9 +12,10 @@ class Separation:
     """
     def __init__(self):
         """Инициализирует объект Separation"""
-        self.file_name = 'vacancies_with_skills.csv'
+        self.file_name = 'vacancies_dif_currencies.csv'
         self.years = set()
         self.currencies = ('USD', 'RUR', 'EUR', 'KZT', 'UAH', 'BYR')
+        self.headingTo = ['name', 'salary', 'area_name', 'published_at']
 
     def separateCsv(self):
         """Считывает входной файл и разделяет его на несколько файлов по годам"""
@@ -27,37 +28,34 @@ class Separation:
                 if len(line) < len(self.headingFrom):
                     continue
 
-                if line[4] not in self.currencies:
+                if line[3] not in self.currencies:
                     continue
 
-                if (line[2] != '' or line[3] != '') and line[4] in self.currencies:
+                if (line[1] != '' or line[2] != ''):
                     date = f'{line[5][8:10]}.{line[5][5:7]}.{line[5][:4]}'
 
-                    if self.curs[f'{line[5][:4]}-{line[5][5:7]}'][line[4]] != '':
-                        if line[2] != '' and line[3] != '':
-                            salary = int(mean((float(line[2]), float(line[3]))) * float(self.curs[f'{line[5][:4]}-{line[5][5:7]}'][line[4]]))
-                        if line[2] != '':
-                            salary = int(float(line[2]) * float(self.curs[f'{line[5][:4]}-{line[5][5:7]}'][line[4]]))
+                    if self.curs[f'{line[5][:4]}-{line[5][5:7]}'][line[3]] != '':
+                        if line[1] != '' and line[2] != '':
+                            salary = int(mean((float(line[1]), float(line[2]))) * float(self.curs[f'{line[5][:4]}-{line[5][5:7]}'][line[3]]))
+                        if line[1] != '':
+                            salary = int(float(line[1]) * float(self.curs[f'{line[5][:4]}-{line[5][5:7]}'][line[3]]))
                         else:
-                            salary = int(float(line[3]) * float(self.curs[f'{line[5][:4]}-{line[5][5:7]}'][line[4]]))
+                            salary = int(float(line[2]) * float(self.curs[f'{line[5][:4]}-{line[5][5:7]}'][line[3]]))
                     else:
                         continue
                 else:
                     continue
 
-                if len(line[1]) != 0:
-                    line[1] = line[1].replace('\n', '&&&&')
-
-                w_File = open(f'./years-csv/{date[6:]}.csv', 'a', encoding='utf-8')
+                w_File = open(f'./cities-csv/{date[6:]}.csv', 'a', encoding='utf-8')
                 with w_File:
                     writer = csv.writer(w_File, lineterminator="\r")
                     if date[6:] not in self.years:
                         self.years.add(date[6:])
                         writer.writerow(self.headingTo)
-                        writer.writerow([line[0], line[1], salary, date])
+                        writer.writerow([line[0], salary, line[4], date])
                         print(self.years)
                     else:
-                        writer.writerow([line[0], line[1], salary, date])
+                        writer.writerow([line[0], salary, line[4], date])
 
     def parserCSVcur(self):
         """Считывает файл с валютами по месяцам"""

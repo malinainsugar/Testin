@@ -56,11 +56,11 @@ class Statistics:
             if i.lower() in vacancy['name'].lower():
                 self.selectedNumberVacancies.update({year: self.selectedNumberVacancies.get(year, 0) + 1})
                 self.selectedSalaryYear.update({year: self.selectedSalaryYear.get(year, []) + [salary]})
+                if len(vacancy['key_skills']) != 0:
+                    self.skills.update({year : self.skills.get(year, []) + vacancy['key_skills'].split('&&&&')})
                 break
-        if len(vacancy['key_skills']) != 0:
-            self.skills.update({year : self.skills.get(year, []) + vacancy['key_skills'].split('&&&&')})
-        #self.vacanciesCity.update({vacancy['area_name']: self.vacanciesCity.get(vacancy['area_name'], 0) + 1})
-        #self.salaryCity.update({vacancy['area_name']: self.salaryCity.get(vacancy['area_name'], []) + [salary]})
+        self.vacanciesCity.update({vacancy['area_name']: self.vacanciesCity.get(vacancy['area_name'], 0) + 1})
+        self.salaryCity.update({vacancy['area_name']: self.salaryCity.get(vacancy['area_name'], []) + [salary]})
         if len(self.selectedNumberVacancies) == 0:
             self.selectedNumberVacancies.update({year: 0})
             self.selectedSalaryYear.update({year: []})
@@ -82,32 +82,19 @@ class Statistics:
             skills = dict(sorted(skills.items(), key = lambda item: item[1], reverse=True)[:10])
             self.skills.update({year : skills})
         self.skills = dict(sorted(self.skills.items(), key = lambda item: item[0]))
-        #salaryCity = dict(sorted({key: int(mean(value)) for key, value in self.salaryCity.items()}.items(), key=lambda item: item[1], reverse=True)[0:10])
-        #vacanciesCity = dict(sorted({key: round(value / self.counts, 4) for key, value in self.vacanciesCity.items()}.items(), key=lambda item: item[1], reverse=True)[0:10])
+        salaryCity = dict(sorted({key: int(mean(value)) for key, value in self.salaryCity.items()}.items(), key=lambda item: item[1], reverse=True)[0:10])
+        vacanciesCity = dict(sorted({key: round(value / self.counts, 4) for key, value in self.vacanciesCity.items()}.items(), key=lambda item: item[1], reverse=True)[0:10])
 
         print('Динамика уровня зарплат по годам:', salaryYear)
         print('Динамика количества вакансий по годам:', numberVacancies)
         print('Динамика уровня зарплат по годам для выбранной профессии:', selectedSalaryYear)
         print('Динамика количества вакансий по годам для выбранной профессии:', selectedNumberVacancies)
-        #print('Уровень зарплат по городам (в порядке убывания):', salaryCity)
-        #print('Доля вакансий по городам (в порядке убывания):', vacanciesCity)
+        print('Уровень зарплат по городам (в порядке убывания):', salaryCity)
+        print('Доля вакансий по городам (в порядке убывания):', vacanciesCity)
         print(self.skills)
+        print(self.years)
 
-        conn = sqlite3.connect('statistics.db')
-        cur = conn.cursor()
-
-        cur.execute("""CREATE TABLE IF NOT EXISTS years(
-        year INT PRIMARY KEY,
-        salaryYear INTEGER,
-        numberVacancies INTEGER,
-        selectedSalaryYear INTEGER,
-        selectedNumberVacancies INTEGER,
-        skills TEXT);
-        """)
-
-        for year in self.years:
-            cur.execute("INSERT INTO years VALUES(?, ?, ?, ?, ?, ?);", (year, salaryYear[year], numberVacancies[year], selectedSalaryYear[year], selectedNumberVacancies[year], json.dumps(self.skills.get(year))))
-            conn.commit()
+        
 
         return {'years': self.years, 'salaryYear': salaryYear, 'numberVacancies': numberVacancies,
         'selectedSalaryYear': selectedSalaryYear, 'selectedNumberVacancies': selectedNumberVacancies, 'skills': self.skills}
@@ -267,14 +254,3 @@ class Report:
 
         config = pdfkit.configuration(wkhtmltopdf=r'C:\wkhtmltox\bin\wkhtmltopdf.exe')
         pdfkit.from_string(pdf_template, 'report.pdf', configuration=config, options={'enable-local-file-access': ""})
-
-currency_to_rub = {"AZN": 35.68,
-                       "BYR": 23.91,
-                       "EUR": 59.90,
-                       "GEL": 21.74,
-                       "KGS": 0.76,
-                       "KZT": 0.13,
-                       "RUR": 1,
-                       "UAH": 1.64,
-                       "USD": 60.66,
-                       "UZS": 0.0055,}
