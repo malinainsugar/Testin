@@ -2,6 +2,7 @@ from Report import Statistics
 import concurrent.futures as pool
 import os
 import csv
+import sqlite3
 
 class MultiprocessingByYear:
     """Класс, представляющий мультипроцессорную обработку данных
@@ -9,6 +10,7 @@ class MultiprocessingByYear:
     Attributes:
         statistics (Statistics) : объект, хранящий общие результаты анализа
     """
+
     def __init__(self, statistics):
         """Инициализирует объект MultiprocessingByYear
         
@@ -36,3 +38,5 @@ class MultiprocessingByYear:
             for line in reader:
                 vacancy = {self.heading[i]: line[i] for i in range(len(self.heading))}
                 self.statistics.filtering(vacancy)
+            print(file_name)
+                

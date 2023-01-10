@@ -1,6 +1,8 @@
 import sqlite3
 import csv
 import json
+import os
+import pandas as pd
 
 
 class DB:
@@ -9,7 +11,7 @@ class DB:
     def citiesDB(salaryCity, vacanciesCity):
         """Заполняет таблицы salaryCity и vacanciesCity с результатами анализа по городам
 
-        Attributes:
+        Args:
             salaryCity (dict) : Словарь уровней зарплат по городам
             vacanciesCity (dict) : Словарь количества вакансий по городам
         """
@@ -43,7 +45,7 @@ class DB:
     def yearsDB(dataList):
         """Заполняет таблицу years с результатами анализа по годам
 
-        Attributes:
+        Args:
             dataList (dict) : Словарь словарей с результатами анализа
         """
         conn = sqlite3.connect('statistics.db')
@@ -52,3 +54,16 @@ class DB:
         for year in dataList['years']:
             cur.execute("INSERT INTO currencies VALUES(?, ?, ?, ?, ?, ?);", (year, dataList['salaryYear'][year], dataList['numberVacancies'][year], dataList['selectedSalaryYear'][year], dataList['selectedNumberVacancies'][year], json.dumps(dataList['skills'][year])))
             conn.commit()  
+
+    def vacanciesDB(self, file):
+        """Заполняет таблицу vacancies вакансиями
+
+        Args:
+            file (str): Название файла для обработки
+        """
+        conn = sqlite3.connect('statistics.db')
+
+        df = pd.read_csv(f'./cities-csv/{file}')
+        df.to_sql('vacancies')
+
+        conn.close()

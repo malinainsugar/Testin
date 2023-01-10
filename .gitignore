@@ -1,6 +1,6 @@
 /.idea
 /venv
-*.csv
 /__pycache__
 /years-csv
 /cities-csv
+*db

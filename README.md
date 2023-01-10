@@ -43,3 +43,12 @@
 ## Разделённые csv-файлы:
 
 ![](Screenshots/separateFiles.PNG)
+
+## БД с курсами валют
+
+![](Screenshots/currencies.PNG)
+
+## БД с вакансиями
+
+![](Screenshots/db.PNG)
+
