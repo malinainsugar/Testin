@@ -1,11 +1,11 @@
 main {
-    padding: 0 200px;
+    padding: 0 100px;
 }
 
-div {
+div:not(.author) {
     display: flex;
-    gap: 50px;
-    justify-content: space-evenly;
+    gap: 100px;
+    justify-content: center;
 }
 
 .first {

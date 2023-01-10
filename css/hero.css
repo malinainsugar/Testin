@@ -82,3 +82,11 @@ p {
 .highlighting-color {
     color: #00FF85;
 }
+
+section img {
+    margin: auto 0;
+}
+
+main {
+    padding: 0 50px;
+}

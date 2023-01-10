@@ -1,3 +1,7 @@
+html {
+    height: 100%;
+}
+
 body {
     background-color: #1F2028;
     font-family: 'Raleway';
@@ -7,6 +11,7 @@ body {
     color: white;
     margin: 0;
     padding: 0;
+    min-height: 100%;
 }
 
 .main-header {
@@ -50,7 +55,8 @@ body {
 }
 
 main {
-    padding: 0 60px;
+    min-height: calc(100vh - 260px);
+    padding: 0 40px;
     margin: 0 auto;
     margin-bottom: 56px;
 }
@@ -121,6 +127,12 @@ main {
 
 .footer-navigation-list-item a:active{
     color: #06C468;
-    color: #b7cbc2;
+}
+
+.active {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    text-underline-position: under;
 }
                                          

@@ -1,6 +1,6 @@
 main {
-    display: flex; 
-    gap: 50px;
+    display: flex;
+    gap: 100px;
     padding: 0 200px;
 }
 
@@ -17,5 +17,5 @@ img {
 th {
     position: sticky;
     top: 0;
-    background-color: #01E176;
+    background-color: #00FF85;
 }
