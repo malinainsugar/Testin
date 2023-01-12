@@ -33,7 +33,7 @@
                 <img src="{% static 'img/selectedNumberVacancies.png'%}" height="300" alt="График количества вакансий тестировщика по годам">
             </div>
             <table class="dynamics-table">
-                <tr><th>Год</th><th>Средняя зарплата</th><th>Средняя зарплата - Тестировщик (QA-инженер)</th><th>Количество вакансий</th><th>Количество вакансий - Тестировщик (QA-инженер)</th></tr>
+                <tr><th>Год</th><th>Средняя зарплата</th><th>Средняя зарплата - {{ profession.title }}</th><th>Количество вакансий</th><th>Количество вакансий - {{ profession.title }}</th></tr>
                 <tr><td>2003</td><td>50000</td><td>40000</td><td>6545240</td><td>4533</td></tr>
             </table>
         </main>

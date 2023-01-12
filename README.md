@@ -4,51 +4,51 @@
 
 - Отчёт о тестировании на doctest
 
-![](Screenshots/doctest.PNG)
+![](analysis/Screenshots/doctest.PNG)
 
 - Отчёт о тестировании на unittest
 
-![](Screenshots/unittest.PNG)
+![](analysis/Screenshots/unittest.PNG)
 
 ## Профилирование:
 ### Без многопроцессорной обработки
 
 - При печати вакансий
 
-![](Screenshots/vacanciesProfile.PNG)
+![](analysis/Screenshots/vacanciesProfile.PNG)
 
 - При генерации отчёта
 (Здесь профилирование было с файлом vacancies_medium)
 
-![](Screenshots/statisticsProfile.PNG)
+![](analysis/Screenshots/statisticsProfile.PNG)
 
 - При форматировании даты: 
 
 Функция formatterDataDatetime
 
-![](Screenshots/datetimeProfile.PNG)
+![](analysis/Screenshots/datetimeProfile.PNG)
 
 Функция formatterDataStr
 
-![](Screenshots/strProfile.PNG)
+![](analysis/Screenshots/strProfile.PNG)
 
 Функция formatterDataRe (переименована)
 
-![](Screenshots/reProfile.PNG)
+![](analysis/Screenshots/reProfile.PNG)
 
 ### Concurrent futures
 
-![](Screenshots/multiProfile.PNG)
+![](analysis/Screenshots/multiProfile.PNG)
 
 ## Разделённые csv-файлы:
 
-![](Screenshots/separateFiles.PNG)
+![](analysis/Screenshots/separateFiles.PNG)
 
 ## БД с курсами валют
 
-![](Screenshots/currencies.PNG)
+![](analysis/Screenshots/currencies.PNG)
 
 ## БД с вакансиями
 
-![](Screenshots/db.PNG)
+![](analysis/Screenshots/db.PNG)
 
