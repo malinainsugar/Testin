@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="ru">
     <head>
+        {% load static %}
+
         <title>Последние вакансии</title>
-        <link href="./css/style.css" rel="stylesheet">
-        <link href="./css/card.css" rel="stylesheet">
+        
+        <link href="{% static 'css/style.css'%}" rel="stylesheet">
+        <link href="{% static 'css/card.css'%}" rel="stylesheet">
         
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,12 +16,12 @@
         <header class="main-header">
             <nav class="site-navigation">
                 <ul class="site-navigation-list">
-                    <li class="site-navigation-list-item"><a href="demand.html">Востребованность</a></li>
-                    <li class="site-navigation-list-item"><a href="geography.html">География</a></li>
-                    <li class="site-navigation-list-item"><a href="skills.html">Навыки</a></li>
-                    <li class="site-navigation-list-item active"><a href="recent-vacancies.html">Последние вакансии</a></li>
+                    <li class="site-navigation-list-item"><a href="/demand">Востребованность</a></li>
+                    <li class="site-navigation-list-item"><a href="/geography">География</a></li>
+                    <li class="site-navigation-list-item"><a href="/skills">Навыки</a></li>
+                    <li class="site-navigation-list-item active"><a href="/vacancies">Последние вакансии</a></li>
                 </ul>
-                <a href="index.html"><img class="main-logo" src="./img/header_logo.svg" width="172" height="35" alt="Логотип Testin"></a>
+                <a href="/"><img class="main-logo" src="{% static 'img/header_logo.svg'%}" width="172" height="35" alt="Логотип Testin"></a>
             </nav>
         </header>
         <main>
@@ -45,17 +48,17 @@
             </div>
         </main>
         <footer class="main-footer">
-            <img class="footer-logo" src="./img/footer_logo.svg" width="144" height="28" alt="Логотип Testin">
+            <img class="footer-logo" src="{% static 'img/footer_logo.svg'%}" width="144" height="28" alt="Логотип Testin">
             <div class="author">
                 <p>© Трефелова Алина Николаевна</p>
                 <p>РИ-210944</p>
             </div>
-            <a class="git" href="https://github.com/malinainsugar/Trefelova"><img  src="./img/git.svg" width="43" height="43" alt="github"></a>
+            <a class="git" href="https://github.com/malinainsugar/Trefelova"><img  src="{% static 'img/git.svg'%}" width="43" height="43" alt="github"></a>
             <ul class="footer-navigation-list">
-                <li class="footer-navigation-list-item"><a href="demand.html">Востребованность</a></li>
-                <li class="footer-navigation-list-item"><a href="geography.html">География</a></li>
-                <li class="footer-navigation-list-item"><a href="skills.html">Навыки</a></li>
-                <li class="footer-navigation-list-item"><a href="recent-vacancies.html">Последние вакансии</a></li>
+                <li class="footer-navigation-list-item"><a href="/demand">Востребованность</a></li>
+                <li class="footer-navigation-list-item"><a href="/geography">География</a></li>
+                <li class="footer-navigation-list-item"><a href="/skills">Навыки</a></li>
+                <li class="footer-navigation-list-item"><a href="/vacancies">Последние вакансии</a></li>
             </ul>
         </footer>
     </body>
