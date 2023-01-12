@@ -3,3 +3,5 @@
 /__pycache__
 /analysis/venv
 /analysis/.idea
+/django_testin/__pycache__
+/testin/__pycache__
