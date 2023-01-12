@@ -1,0 +1,138 @@
+html {
+    height: 100%;
+}
+
+body {
+    background-color: #1F2028;
+    font-family: 'Raleway';
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 21px;
+    color: white;
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+}
+
+.main-header {
+    background-color: #00FF85;
+    margin: 0;
+    padding: 13px 36px;
+    margin-bottom: 70px;
+}
+
+.site-navigation {
+    display: flex;
+}
+
+.site-navigation-list {
+    list-style: none;
+    margin: auto;
+    margin-left: 0;
+    padding: 0;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 19px;
+}
+
+.site-navigation-list-item a{
+    margin: 0;
+    padding: 0;
+    font-size: 18px;
+    line-height: 22px;
+    color: black;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.site-navigation-list-item a:hover {
+    opacity: 0.5;
+}
+
+.site-navigation-list-item a:active {
+    opacity: 0.3;
+}
+
+main {
+    min-height: calc(100vh - 260px);
+    padding: 0 40px;
+    margin: 0 auto;
+    margin-bottom: 56px;
+}
+
+.footer-logo {
+    margin: auto 0;
+    margin-right: 20px;
+}
+
+.main-footer {
+    background-color: #7C7878;
+    font-size: 15px;
+    line-height: 18px;
+    margin-top: 0;
+    padding: 14px 23px;
+
+    display: flex;
+    margin-bottom: 0;
+}
+
+.main-footer .author {
+    color: #CBCBCB;
+    margin: auto;
+    margin-left: 0;
+    margin-right: 26px;
+}
+
+.author p {
+    margin: 0;
+}
+
+.author:first-child {
+    margin-bottom: 6px;
+}
+
+.footer-navigation-list {
+    list-style: none;
+    margin: auto;
+    margin-right: 0;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 36px;
+}
+
+.git {
+    margin: auto;
+    margin-left: 0;
+}
+
+.git:hover {
+    opacity: 0.5;
+}
+
+.git:active {
+    opacity: 0.3;
+}
+
+.footer-navigation-list-item a{
+    text-decoration: none;
+    color: #CBCBCB;
+    text-transform: uppercase;
+}
+
+.footer-navigation-list-item a:hover{
+    color: #00FF85;
+}
+
+.footer-navigation-list-item a:active{
+    color: #06C468;
+}
+
+.active {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    text-underline-position: under;
+}
+                                         

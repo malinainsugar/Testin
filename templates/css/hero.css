@@ -1,0 +1,92 @@
+.hero h1 {
+    font-size: 64px;
+    line-height: 75px;
+    text-transform: uppercase;
+    color: #00FF85;
+    font-weight: 700;
+
+    margin: 0;
+    text-align: center;
+    margin-bottom: 46px;
+}
+
+.hero-text {
+    font-size: 20px;
+    line-height: 23px;
+
+    text-align: center;
+}
+
+.hero {
+    margin-bottom: 68px;
+}
+
+h2 {
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 38px;
+    color: #00FF85;
+    text-align: end;
+    margin: 0;
+    margin-bottom: 40px;
+
+    text-decoration: underline;
+    text-decoration-color: #00FF85;
+    text-decoration-thickness: 4px;
+    text-underline-offset: 10px;
+    text-underline-position: under;
+}
+
+section:not(.hero) {
+    display: flex;
+    gap: 50px;
+    padding: 0;
+    margin-bottom: 68px;
+}
+
+p {
+    margin-bottom: 30px;
+}
+
+.stages-list {
+    margin: 0;
+    padding-left: 15px;
+}
+
+.stages-list-item {
+    margin-bottom: 10px;
+}
+    
+.perspective h2 {
+    text-align: start;
+}
+
+.perspective-list-item {
+    margin-bottom: 10px;
+}
+
+.required-skills p {
+    text-align: end;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.line {
+    margin: 30px 0;
+    margin-left: auto;
+    width: 215px;
+    border-bottom: 5px solid #00FF85;
+}
+
+.highlighting-color {
+    color: #00FF85;
+}
+
+section img {
+    margin: auto 0;
+}
+
+main {
+    padding: 0 50px;
+}

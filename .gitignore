@@ -1,6 +1,5 @@
 /.idea
 /venv
 /__pycache__
-/years-csv
-/cities-csv
-*db
+/analysis/venv
+/analysis/.idea

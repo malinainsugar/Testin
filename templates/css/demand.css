@@ -1,0 +1,21 @@
+main {
+    display: flex;
+    gap: 100px;
+    padding: 0 200px;
+}
+
+img {
+    display: block;
+}
+
+.graphics {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+th {
+    position: sticky;
+    top: 0;
+    background-color: #00FF85;
+}

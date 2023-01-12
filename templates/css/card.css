@@ -1,0 +1,70 @@
+main {
+    padding: 0 100px;
+}
+
+.card {
+    background-color: #7C7878;
+    font-size: 20px;
+    line-height: 23px;
+
+    margin: 0;
+    margin-bottom: 30px;
+    padding: 10px 30px 20px 30px;
+}
+
+p {
+    margin: 0;
+    margin-top: 10px;
+}
+
+h2 {
+    text-align: center;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 28px;
+    color: #00FF85;
+    margin: 0;
+}
+
+.line {
+    border-bottom: 2px solid #06C368;
+    margin: 10px;
+}
+
+.heading-color {
+    color: #01E176;
+}
+
+.skills {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin: 0;
+}
+
+.skill {
+    font-size: 16px;
+    line-height: 19px;
+    color: #7C7878;
+    background-color: #CBCBCB;
+    padding: 6px 10px;
+}
+
+.salary {
+    display: flex;
+    gap: 30px;
+    margin: 0;
+}
+
+.value {
+    display: flex;
+    gap: 10px;
+}
+
+.addition {
+    margin-top: 10px;
+    font-size: 18px;
+    line-height: 21px;
+    display: flex;
+    justify-content: space-between;
+}

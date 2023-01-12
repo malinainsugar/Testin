@@ -1,0 +1,21 @@
+main {
+    padding: 0 100px;
+}
+
+div:not(.author) {
+    display: flex;
+    gap: 100px;
+    justify-content: center;
+}
+
+.first {
+    margin-bottom: 50px;
+}
+
+table {
+    width: 600px;
+}
+
+tt, td {
+    padding: 5px;
+}

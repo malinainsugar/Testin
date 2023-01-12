@@ -1,8 +1,6 @@
 import re
 import prettytable
 import datetime
-import doctest
-
 
 class Salary:
     """Класс для представления зарплаты.
