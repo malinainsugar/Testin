@@ -25,27 +25,33 @@
             </nav>
         </header>
         <main>
-            <div class="card">
-                <h2>Название вакансии</h2>
-                <p>Описание вакансии</p>
-                <div class="line"></div>
-                <div class="skills">
-                    <p class="heading-color">Ключевые навыки:</p>
-                    <p class="skill">Навык</p>
-                </div>
-                <div class="salary">
-                    <p class="heading-color">Оклад:</p>
-                    <div class="value">
-                        <p class="salary-value">50000</p>
-                        <p class="rub">руб.</p>
+            {% for vacancy in vacancies %}
+                <div class="card">
+                    <h2>{{ vacancy.name }}</h2>
+                    {% autoescape off %}
+                        <p>{{ vacancy.description }}</p>
+                    {% endautoescape %}
+                    <div class="line"></div>
+                    <div class="skills">
+                        <p class="heading-color">Ключевые навыки:</p>
+                        {% for skill in vacancy.key_skills %}
+                        <p class="skill">{{ skill }}</p>
+                        {% endfor %}
+                    </div>
+                    <div class="salary">
+                        <p class="heading-color">Оклад:</p>
+                        <div class="value">
+                            <p class="salary-value">{{ vacancy.salary }}</p>
+                            <p class="cur">{{ vacancy.currency }}</p>
+                        </div>
+                    </div>
+                    <div class="addition">
+                        <p class="company">{{ vacancy.employer_name }}</p>
+                        <p class="area">{{ vacancy.area_name }}</p>
+                        <p class="date">{{ vacancy.published_at }}</p>
                     </div>
                 </div>
-                <div class="addition">
-                    <p class="company">Компания</p>
-                    <p class="area">Екатеринбург</p>
-                    <p class="date">12.12.2022</p>
-                </div>
-            </div>
+            {% endfor %}
         </main>
         <footer class="main-footer">
             <img class="footer-logo" src="{% static 'img/footer_logo.svg'%}" width="144" height="28" alt="Логотип Testin">

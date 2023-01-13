@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from testin.models import Profession, Years, salaryCities, vacanciesCities
+from testin.hhApi import hhApi
 
 def index_page(reqest):
     data = {
@@ -34,5 +35,7 @@ def skills_page(reqest):
     return render(reqest, 'skills.html', context=data)
 
 def vacancies_page(reqest):
-    data = {}
+    data = {
+        'vacancies': hhApi.loadingVacancies(20, 12, 2022)
+    }
     return render(reqest, 'recent-vacancies.html', context=data)

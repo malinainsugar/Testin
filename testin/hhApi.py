@@ -27,8 +27,8 @@ class Vacancy:
         self.description = vacancy["description"]
         self.key_skills = [skill['name'] for skill in vacancy["key_skills"]]
         self.employer_name = vacancy["employer"]["name"]
-        self.salary = salary
-        self.currency = vacancy['salary']["currency"]
+        self.salary = str(salary)[:-3] + ' ' + str(salary)[-3:]
+        self.currency = 'руб.' if vacancy['salary']["currency"] == 'RUR' else vacancy['salary']["currency"]
         self.area_name = vacancy["area"]["name"]
         self.published_at = f'{vacancy["published_at"][8:10]}.{vacancy["published_at"][5:7]}.{vacancy["published_at"][:4]}'
 
@@ -36,7 +36,7 @@ class Vacancy:
 class hhApi:
     """Класс для работы с ApiHH.ru"""
 
-    def loadingVacancies(self, day, month, year, maxLen = 10):
+    def loadingVacancies(day, month, year, maxLen = 10):
         """Загружает вакансии за необходимый день
         
         Args:

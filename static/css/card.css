@@ -37,7 +37,7 @@ h2 {
 
 .skills {
     display: flex;
-    gap: 20px;
+    column-gap: 20px;
     flex-wrap: wrap;
     margin: 0;
 }
@@ -48,6 +48,7 @@ h2 {
     color: #7C7878;
     background-color: #CBCBCB;
     padding: 6px 10px;
+    margin-bottom: 5px;
 }
 
 .salary {
