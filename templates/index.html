@@ -3,10 +3,10 @@
     <head>
         {% load static %}
         
-        <title>{{ profession.title }}</title>
+        <title>{{ profession_title }}</title>
         
         <link href="{% static 'css/style.css' %}" rel="stylesheet">
-        <link href="{% static 'css/hero.css'%}" rel="stylesheet"> 
+        <link href="{% static 'css/hero.css' %}" rel="stylesheet"> 
         
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,66 +21,47 @@
                     <li class="site-navigation-list-item"><a href="/skills">Навыки</a></li>
                     <li class="site-navigation-list-item"><a href="/vacancies">Последние вакансии</a></li>
                 </ul>
-                <a href="#"><img class="main-logo" src="{% static 'img/header_logo.svg'%}" width="172" height="35" alt="Логотип Testin"></a>
+                <a href="#"><img class="main-logo" src="{% static 'img/header_logo.svg' %}" width="172" height="35" alt="Логотип Testin"></a>
             </nav>
         </header>
         <main>
+            {% autoescape off %}
             <section class="hero">
-                <h1>{{ profession.title }}</h1>
-                <p class="hero-text">QA-тестировщик или инженер по тестированию (QA-engineer) — это специалист, который создаёт сценарии тестирования, прогнозирует сбои и находит ошибки в продуктах. Зачем в компании такая позиция? Дело в том, что любой IT-продукт нужно проверять на каждом этапе разработки: это экономит ресурсы бизнеса, ведь чем раньше найдены недочёты, тем проще и дешевле их исправить.</p>
-                <p class="hero-text">Чтобы работать хорошо и с удовольствием, тестировщику важно быть внимательным и дотошным, пригодится и хорошее структурное мышление. Также полезно разбираться в бизнес-процессах и досконально знать продукт, чтобы сохранять баланс между интересами пользователей, целями менеджмента компании и возможностями команды разработки.</p>
+                <h1>{{ profession_title }}</h1>
+                {{ profession_description.0 }}
             </section>
             <section class="tasks">
-                <img src="{% static 'img/Software code testing-pana.svg'%}" height="400">
+                <img src="{% static 'img/Software code testing-pana.svg' %}" height="400">
                 <div class="text">
                     <h2>Задачи и обязанности тестировщика</h2>
-                    <p class="job-description">Тестировщик проверяет, что приложение работает так, как ожидается по документации. Если это не так, он фиксирует ошибку и передаёт её на исправление в отдел разработки.</p>
-                    <p class="job-description">Обычно тестировщик проводит проверку в несколько этапов:</p>
-                    <ol class="stages-list">
-                        <li class="stages-list-item"><span class="highlighting-color">Изучает документацию и уточняет спорные моменты в ней.</span> В результате понимает, какую функциональность продукта нужно будет тестировать.</li>
-                        <li class="stages-list-item"><span class="highlighting-color">Разрабатывает тесты.</span> На этом этапе тестировщик готовит набор тестов для проверки. Если в продукт вносят изменения, а их регулярно вносят, нужно скорректировать и тестовую модель.</li>
-                        <li class="stages-list-item"><span class="highlighting-color">Проверка продукта.</span> На этом этапе тестировщик проходит по разработанным тестам и фиксирует результат: в тех местах функциональности, где тесты прошли успешно — подтверждает, что продукт работает корректно, а там, где тесты не прошли — фиксирует ошибки.</li>
-                    </ol>
+                    {{ profession_description.1 }}
                 </div>
             </section>
             <section class="perspective">
                 <div class="text">
                     <h2>Перспективы профессии</h2>
-                    <p>Варианты развития в профессии:</p>
-                    <ul class="perspective-list">
-                        <li class="perspective-list-item"><span class="highlighting-color">Вертикальный.</span> Обычно тестировщик с минимальным опытом или без него начинает с позиции <span class="highlighting-color">младшего специалиста</span>. На этом уровне он проводит ручные тестирования, учится работать с баг-трекинговыми системами, вместе с командой разрабатывает тестовые сценарии.</li>
-                        <li class="perspective-list-item">Через 2–3 года можно перейти на позицию <span class="highlighting-color">продвинутого специалиста</span>. Опытные тестировщики самостоятельно разрабатывают сценарии, погружаются в автоматизированное тестирование и разбираются в коде.</li>
-                        <li class="perspective-list-item">Следующий этап в карьере — <span class="highlighting-color">старший специалист</span>. Кроме вышеперечисленных обязанностей он самостоятельно планирует и проводит тестирование, руководит командой джунов — младших специалистов. <span class="highlighting-color">Старший специалист</span> глубоко разбирается во всех процессах тестирования, руководит проектами и командой инженеров разного уровня.</li>
-                        <li class="perspective-list-item"><span class="highlighting-color">Горизонтальный.</span> Сфера тестирования считается самым лёгким способом входа в IT, и отсюда проще переходить в другие направления. Если тестировщику интереснее развивать профессиональные навыки, можно сосредоточиться на одном направлении и глубоко заниматься автотестированием, тестированием безопасности или юзабилити.</li>
-                    </ul>
+                    {{ profession_description.2 }}
                 </div>
-                <img src="{% static 'img/Milestones of business projects-pana.svg'%}" height="400">
+                <img src="{% static 'img/Milestones of business projects-pana.svg' %}" height="400">
             </section>
             <section class="required-skills">
-                <img src="{% static 'img/404 Error-pana.svg'%}" height="400">
+                <img src="{% static 'img/404 Error-pana.svg' %}" height="400">
                 <div class="text">
                     <h2>Необходимые навыки</h2>
-                    <p><span class="highlighting-color">Теория тестирования</span> - нужно разбираться в классификации тестирования, знать основные методы и инструменты, уметь создавать тест-кейсы.</p>
-                    <p><span class="highlighting-color">Базы данных и SQL</span> -  большинство приложений используют базы данных.</p>
-                    <p><span class="highlighting-color">Linux</span> - на этой операционной системе работают многие сервисы для тестирования.</p>
-                    <p><span class="highlighting-color">Инструменты баг-трекинга</span> -  баг-трекинг помогает координировать действия специалистов.</p>
-                    <p><span class="highlighting-color">Языки программирования</span> - необходимо для автоматизации тестирования.</p>
+                    {{ profession_description.3 }}
                     <div class="line"></div>
-                    <p><span class="highlighting-color">Внимательность</span> - из-за пропущенной ошибки компания может потерять деньги и репутацию.</p>
-                    <p><span class="highlighting-color">Усидчивость</span> - не у всех хватает терпения находить ошибки.</p>
-                    <p><span class="highlighting-color">Умение формулировать свои мысли</span> - должен понятно описать, когда ошибка возникает.</p>
-                    <p><span class="highlighting-color">Коммуникабельность</span> -  важно уметь общаться и находить общий язык с разными людьми.</p>
-                    <p><span class="highlighting-color">Стрессоустойчивость</span> - найти все ошибки в продукте с первого раза невозможно.</p>
+                    {{ profession_description.4 }}
                 </div>
             </section>
+            {% endautoescape %}
         </main>
         <footer class="main-footer">
-            <img class="footer-logo" src="{% static 'img/footer_logo.svg'%}" width="144" height="28" alt="Логотип Testin">
+            <img class="footer-logo" src="{% static 'img/footer_logo.svg' %}" width="144" height="28" alt="Логотип Testin">
             <div class="author">
                 <p>© Трефелова Алина Николаевна</p>
                 <p>РИ-210944</p>
             </div>
-            <a class="git" href="https://github.com/malinainsugar/Trefelova"><img  src="{% static 'img/git.svg'%}" width="43" height="43" alt="github"></a>
+            <a class="git" href="https://github.com/malinainsugar/Trefelova"><img  src="{% static 'img/git.svg' %}" width="43" height="43" alt="github"></a>
             <ul class="footer-navigation-list">
                 <li class="footer-navigation-list-item"><a href="/demand">Востребованность</a></li>
                 <li class="footer-navigation-list-item"><a href="/geography">География</a></li>

@@ -27,7 +27,7 @@
         </header>
         <main>
             <div class="first">
-                <img src="{% static 'img/salaryCity.png'%}" height="400" alt="График уровня зарплат по городам">
+                <img src="{% static 'img/salaryCity.png'%}" height="350" alt="График уровня зарплат по городам">
                 <table class="salary-city-table">
                     <tr><th>Город</th><th>Уровень зарплат</th></tr>
                     {% for city in salaryCities %}
@@ -42,7 +42,7 @@
                         <tr><td>{{ city.city }}</td><td>{{ city.vacancies }}%</td></tr>
                     {% endfor %}
                 </table>
-                <img src="{% static 'img/vacanciesCity.png'%}" height="400" alt="График доли вакансий по городам">
+                <img src="{% static 'img/vacanciesCity.png'%}" height="350" alt="График доли вакансий по городам">
             </div>
         </main>
         <footer class="main-footer">

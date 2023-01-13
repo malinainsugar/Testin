@@ -12,8 +12,7 @@ h1 {
 
 h2 {
     text-transform: uppercase;
-    text-align: center;
-    margin: 40px auto;
+    margin: 40px 0;
     color: #00FF85;
 }
 
@@ -27,4 +26,21 @@ h2 {
 
 .skills-table {
     margin: 0 auto;
+}
+
+.heading {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.buttons {
+    margin: auto 0;
+}
+
+.button:hover {
+    opacity: 0.5;
+}
+
+.button:active {
+    opacity: 0.3;
 }

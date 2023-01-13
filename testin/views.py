@@ -4,7 +4,8 @@ from testin.hhApi import hhApi
 
 def index_page(reqest):
     data = {
-        'profession': Profession.objects.get(id=1)
+        'profession_title': Profession.objects.get(id=1).title,
+        'profession_description': Profession.objects.get(id=1).description.split('&&&')
     }
     return render(reqest, 'index.html', context=data)
 

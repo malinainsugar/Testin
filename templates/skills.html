@@ -28,7 +28,13 @@
         <main>
             <h1>Наиболее высокочастотные навыки</h1>
             <img class="hero-graph" src="{% static 'img/skills.png'%}" height="400" alt="График наиболее высокочастотных навыков">
-            <h2>ТОП-10 навыков по годам для профессии "{{ profession.title }}"</h2>
+            <div class="heading">
+                <h2>ТОП-10 навыков по годам для профессии "{{ profession.title }}"</h2>
+                <div class="buttons">
+                    <img class="button diagram" src="{% static 'img/diagram_button.svg'%}" height="50" alt="Переключить на круговые диаграммы">
+                    <img class="button histogram" src="{% static 'img/histogram_button.svg'%}"height="50" alt="Переключить на гистограммы">
+                </div>
+            </div>
             <div class="graphics">
                 <img class="graph" src="{% static 'img/histograms/skills2015.png'%}" height="200" alt="График навыков 2015 года">
                 <img class="graph" src="{% static 'img/histograms/skills2016.png'%}" height="200" alt="График навыков 2016 года">
@@ -64,5 +70,6 @@
                 <li class="footer-navigation-list-item"><a href="/vacancies">Последние вакансии</a></li>
             </ul>
         </footer>
+        <script src="{% static 'js/main.js' %}"></script>
     </body>
 </html>
