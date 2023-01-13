@@ -41,7 +41,13 @@
             </div>
             <table class="skills-table">
                 <tr><th></th><th>2015</th><th>2016</th><th>2017</th><th>2018</th><th>2019</th><th>2020</th><th>2021</th><th>2022</th></tr>
-                <tr><td>1</td><td>Навык 1</td><td>Навык 2</td><td>Навык 3</td><td>Навык 4</td><td>Навык 5</td><td>Навык 6</td><td>Навык 7</td><td>Навык 8</td></tr>
+                {% for position in skills %}
+                    <tr><td>{{ forloop.counter }}</td>
+                    {% for i in position %}
+                        <td>{{ i }}</td>
+                    {% endfor %}
+                    </tr>
+                {% endfor %}
             </table>
         </main>
         <footer class="main-footer">

@@ -33,8 +33,10 @@
                 <img src="{% static 'img/selectedNumberVacancies.png'%}" height="300" alt="График количества вакансий тестировщика по годам">
             </div>
             <table class="dynamics-table">
-                <tr><th>Год</th><th>Средняя зарплата</th><th>Средняя зарплата - {{ profession.title }}</th><th>Количество вакансий</th><th>Количество вакансий - {{ profession.title }}</th></tr>
-                <tr><td>2003</td><td>50000</td><td>40000</td><td>6545240</td><td>4533</td></tr>
+                <tr><th>Год</th><th>Средняя зарплата</th><th>Средняя зарплата - {{ profession.title }}</th><th>Общее количество вакансий</th><th>Количество вакансий - {{ profession.title }}</th></tr>
+                {% for year in years %}
+                    <tr><td>{{ year.year }}</td><td>{{ year.salaryYear }}</td><td>{{ year.selectedSalaryYear }}</td><td>{{ year.numberVacancies }}</td><td>{{ year.selectedNumberVacancies }}</td></tr>
+                {% endfor %}
             </table>
         </main>
         <footer class="main-footer">

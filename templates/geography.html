@@ -30,13 +30,17 @@
                 <img src="{% static 'img/salaryCity.png'%}" height="400" alt="График уровня зарплат по городам">
                 <table class="salary-city-table">
                     <tr><th>Город</th><th>Уровень зарплат</th></tr>
-                    <tr><td>Москва</td><td>56651</td></tr>
+                    {% for city in salaryCities %}
+                        <tr><td>{{ city.city }}</td><td>{{ city.salary }}</td></tr>
+                    {% endfor %}
                 </table>
             </div>
             <div>
                 <table class="vacancies-city-table">
                     <tr><th>Город</th><th>Доля вакансий</th></tr>
-                    <tr><td>Москва</td><td>56651</td></tr>
+                    {% for city in vacanciesCities %}
+                        <tr><td>{{ city.city }}</td><td>{{ city.vacancies }}%</td></tr>
+                    {% endfor %}
                 </table>
                 <img src="{% static 'img/vacanciesCity.png'%}" height="400" alt="График доли вакансий по городам">
             </div>
