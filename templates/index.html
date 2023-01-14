@@ -28,19 +28,19 @@
             {% autoescape off %}
             <section class="hero">
                 <h1>{{ profession_title }}</h1>
-                {{ profession_description.0 }}
+                {{ profession_description.hero }}
             </section>
             <section class="tasks">
                 <img src="{% static 'img/Software code testing-pana.svg' %}" height="400">
                 <div class="text">
                     <h2>Задачи и обязанности тестировщика</h2>
-                    {{ profession_description.1 }}
+                    {{ profession_description.tasks }}
                 </div>
             </section>
             <section class="perspective">
                 <div class="text">
                     <h2>Перспективы профессии</h2>
-                    {{ profession_description.2 }}
+                    {{ profession_description.perspective }}
                 </div>
                 <img src="{% static 'img/Milestones of business projects-pana.svg' %}" height="400">
             </section>
@@ -48,9 +48,9 @@
                 <img src="{% static 'img/404 Error-pana.svg' %}" height="400">
                 <div class="text">
                     <h2>Необходимые навыки</h2>
-                    {{ profession_description.3 }}
+                    {{ profession_description.hardSkills }}
                     <div class="line"></div>
-                    {{ profession_description.4 }}
+                    {{ profession_description.softSkills }}
                 </div>
             </section>
             {% endautoescape %}

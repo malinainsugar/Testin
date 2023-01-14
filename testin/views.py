@@ -3,9 +3,18 @@ from testin.models import Profession, Years, salaryCities, vacanciesCities
 from testin.hhApi import hhApi
 
 def index_page(reqest):
+    description = Profession.objects.get(id=1).description.split('&&&')
+    description = {
+        'hero': description[0],
+        'tasks': description[1],
+        'perspective': description[2],
+        'hardSkills': description[3],
+        'softSkills':description[4],
+    }
+
     data = {
         'profession_title': Profession.objects.get(id=1).title,
-        'profession_description': Profession.objects.get(id=1).description.split('&&&')
+        'profession_description': description,
     }
     return render(reqest, 'index.html', context=data)
 
